@@ -1,3 +1,7 @@
+import {
+  DiscordMessage,
+  DiscordMessages,
+} from "@skyra/discord-components-react";
 import { APIMessage } from "discord-api-types/v10";
 import { useEffect, useState } from "react";
 
@@ -19,18 +23,21 @@ export default function App() {
     <main>
       <h1>Discord messages</h1>
 
-      {messages.map((message) => (
-        <div key={message.id}>
-          {message.author.avatar ? (
-            <img
-              src={`https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp`}
-              alt={`${message.author.username}'s avatar`}
-            />
-          ) : null}
-          <p>{message.author.username}</p>
-          <p>{message.content}</p>
-        </div>
-      ))}
+      <DiscordMessages>
+        {messages.map((message) => (
+          <DiscordMessage
+            key={message.id}
+            author={message.author.username}
+            avatar={
+              message.author.avatar
+                ? `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp`
+                : "https://cdn.discordapp.com/embed/avatars/0.png"
+            }
+          >
+            {message.content}
+          </DiscordMessage>
+        ))}
+      </DiscordMessages>
     </main>
   );
 }

@@ -31,8 +31,8 @@ router.get("/getLatestMessages", async (ctx) => {
   });
 
   const messagesFetched = messages.map(async (message) => ({
-    ...message,
-    author: await message.author.fetch()
+    author: await message.author.fetch(),
+    ...message
   }));
 
   ctx.response.body = {

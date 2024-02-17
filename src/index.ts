@@ -34,9 +34,9 @@ router.get("/getLatestMessages", async (ctx) => {
     author: await message.author.fetch()
   }));
 
-  ctx.response.body = JSON.stringify({
+  ctx.response.body = {
     messages: await Promise.all(messagesFetched)
-  });
+  };
 });
 
 const app = new Koa();

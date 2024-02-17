@@ -1,0 +1,37 @@
+{
+  "name": "discord-messages-api",
+  "version": "1.0.0",
+  "description": "API for getting last messages from Discord channel",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node .",
+    "start:dotenv": "node --env-file=.env .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "fmt": "npx prettier --check .",
+    "fmt:fix": "npx prettier --write .",
+    "lint": "eslint ./"
+  },
+  "author": "Aleksei Rybin <0xalekseirybin@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/router": "^12.0.1",
+    "discord.js-selfbot-v13": "^3.1.4",
+    "koa": "^2.15.0",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.14.0",
+    "@types/koa__router": "^12.0.4",
+    "@types/node": "^20.11.19",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

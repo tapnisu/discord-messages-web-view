@@ -5,10 +5,25 @@ import Koa from "koa";
 const router = new Router();
 
 router.get("/getLatestMessages", async (ctx) => {
-  if (!client.isReady()) return (ctx.response.status = 500);
+  if (!client.isReady()) {
+    ctx.response.body = "Client is not ready!";
+    ctx.response.status = 500;
+
+    return;
+  }
 
   const channel = await client.channels.fetch(process.env.DISCORD_CHANNEL_ID!);
-  if (channel == null || !channel.isText()) return (ctx.response.status = 500);
+
+  if (channel == null) {
+    ctx.response.body = "Channel not found!";
+    ctx.response.status = 500;
+    return;
+  }
+  if (!channel.isText()) {
+    ctx.response.body = "This is not a text channel!";
+    ctx.response.status = 500;
+    return;
+  }
 
   const messages = await channel.messages.fetch({
     limit: 5

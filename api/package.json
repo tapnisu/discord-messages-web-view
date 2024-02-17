@@ -15,6 +15,7 @@
   "author": "Aleksei Rybin <0xalekseirybin@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@koa/cors": "^5.0.0",
     "@koa/router": "^12.0.1",
     "discord.js-selfbot-v13": "^3.1.4",
     "koa": "^2.15.0",

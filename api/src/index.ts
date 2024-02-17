@@ -1,3 +1,4 @@
+import cors from "@koa/cors";
 import Router from "@koa/router";
 import { Client } from "discord.js-selfbot-v13";
 import Koa from "koa";
@@ -41,6 +42,7 @@ router.get("/getLatestMessages", async (ctx) => {
 
 const app = new Koa();
 
+app.use(cors());
 app.use(router.routes());
 app.use(router.allowedMethods());
 

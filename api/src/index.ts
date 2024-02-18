@@ -1,42 +1,40 @@
 import cors from "@koa/cors";
 import Router from "@koa/router";
-import { Client, IntentsBitField } from "discord.js";
+import { Client, IntentsBitField, Message } from "discord.js";
 import Koa from "koa";
 
 const router = new Router();
 
-router.get("/getLatestMessages", async (ctx) => {
-  if (!client.isReady()) {
-    ctx.response.body = "Client is not ready!";
-    ctx.response.status = 500;
+let messages: Message[] = [];
 
-    return;
-  }
+async function getLatestMessages(
+  client: Client,
+  limit = 5
+): Promise<Message[]> {
+  if (!client.isReady()) return;
 
   const channel = await client.channels.fetch(process.env.DISCORD_CHANNEL_ID!);
 
-  if (channel == null) {
-    ctx.response.body = "Channel not found!";
-    ctx.response.status = 500;
-    return;
-  }
-  if (!channel.isTextBased()) {
-    ctx.response.body = "This is not a text channel!";
-    ctx.response.status = 500;
-    return;
-  }
+  if (channel == null) return;
+  if (!channel.isTextBased()) return;
 
   const messages = await channel.messages.fetch({
-    limit: 5
+    limit
   });
 
-  const messagesFetched = messages.map(async (message) => ({
-    author: await message.author.fetch(),
-    ...message
-  }));
+  const messagesFetched = await Promise.all(
+    messages.map(async (message) => ({
+      author: await message.author.fetch(),
+      ...message
+    }))
+  );
 
+  return messagesFetched.reverse() as unknown[] as Message[];
+}
+
+router.get("/getLatestMessages", async (ctx) => {
   ctx.response.body = {
-    messages: (await Promise.all(messagesFetched)).reverse()
+    messages
   };
 });
 
@@ -55,6 +53,14 @@ const client = new Client({
     IntentsBitField.Flags.GuildMessages
   ]
 });
+
+client.once("ready", async (ctx) => {
+  console.log(`${ctx.user.username} is ready!`);
+
+  messages = await getLatestMessages(client);
+  setInterval(async () => (messages = await getLatestMessages(client)), 20000);
+});
+
 client.login(process.env.DISCORD_TOKEN);
 
 app.listen({ port: process.env.PORT || 8000 });

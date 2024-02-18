@@ -1,9 +1,19 @@
 import cors from "@koa/cors";
 import Router from "@koa/router";
-import { Client, IntentsBitField, Message } from "discord.js";
+import { Client, IntentsBitField } from "discord.js";
 import Koa from "koa";
 
 const router = new Router();
+
+interface Message {
+  content: string;
+  author: Author;
+}
+
+interface Author {
+  username: string;
+  avatarURL: string;
+}
 
 let messages: Message[] = [];
 
@@ -23,13 +33,20 @@ async function getLatestMessages(
   });
 
   const messagesFetched = await Promise.all(
-    messages.map(async (message) => ({
-      author: await message.author.fetch(),
-      ...message
-    }))
+    messages.map(async (message) => {
+      const author = await message.author.fetch();
+
+      return {
+        content: message.content,
+        author: {
+          username: message.author.username ?? message.author.username,
+          avatarURL: author.avatarURL()
+        }
+      };
+    })
   );
 
-  return messagesFetched.reverse() as unknown[] as Message[];
+  return messagesFetched.reverse();
 }
 
 router.get("/getLatestMessages", async (ctx) => {

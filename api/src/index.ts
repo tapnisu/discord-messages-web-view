@@ -1,6 +1,6 @@
 import cors from "@koa/cors";
 import Router from "@koa/router";
-import { Client } from "discord.js-selfbot-v13";
+import { Client, IntentsBitField } from "discord.js";
 import Koa from "koa";
 
 const router = new Router();
@@ -20,7 +20,7 @@ router.get("/getLatestMessages", async (ctx) => {
     ctx.response.status = 500;
     return;
   }
-  if (!channel.isText()) {
+  if (!channel.isTextBased()) {
     ctx.response.body = "This is not a text channel!";
     ctx.response.status = 500;
     return;
@@ -46,7 +46,15 @@ app.use(cors());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-const client = new Client();
+const client = new Client({
+  intents: [
+    IntentsBitField.Flags.Guilds,
+    IntentsBitField.Flags.GuildMessages,
+    IntentsBitField.Flags.GuildMembers,
+    IntentsBitField.Flags.MessageContent,
+    IntentsBitField.Flags.GuildMessages
+  ]
+});
 client.login(process.env.DISCORD_TOKEN);
 
 app.listen({ port: process.env.PORT || 8000 });

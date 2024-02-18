@@ -36,7 +36,7 @@ router.get("/getLatestMessages", async (ctx) => {
   }));
 
   ctx.response.body = {
-    messages: await Promise.all(messagesFetched)
+    messages: (await Promise.all(messagesFetched)).reverse()
   };
 });
 

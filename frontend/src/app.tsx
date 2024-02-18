@@ -18,20 +18,26 @@ export default function App() {
   }, []);
 
   return (
-    <main>
-      <h1>Discord messages</h1>
+    <main className="min-h-screen flex flex-col justify-center items-center bg-neutral-800 text-white">
+      <h1 className="text-xl font-bold">Discord messages</h1>
 
-      {messages.map((message) => (
-        <div className="flex">
-          <Avatar user={message.author} className="p-2" />
+      <div className="w-full max-w-[768px]">
+        {messages.map((message) => (
+          <div className="flex">
+            <Avatar user={message.author} className="p-2" />
 
-          <div className="p-2">
-            <b>{message.author.global_name ?? message.author.username}</b>
+            <div className="p-2">
+              <b>{message.author.global_name ?? message.author.username}</b>
 
-            <p>{message.content}</p>
+              <p>{message.content}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      <p>
+        Built by <a href="https://github.com/tapnisu" className="text-cyan-400 underline">tapnisu</a>
+      </p>
     </main>
   );
 }

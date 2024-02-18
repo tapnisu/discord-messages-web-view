@@ -8,14 +8,14 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLImageElement> {
 export default function Avatar(props: AvatarProps) {
   return (
     <img
+      {...props}
       src={
         props.user.avatar
           ? `https://cdn.discordapp.com/avatars/${props.user.id}/${props.user.avatar}.webp`
           : "https://cdn.discordapp.com/embed/avatars/0.png"
       }
       alt={`${props.user.global_name ?? props.user.username}'s avatar`}
-      className={twMerge("rounded-full size-14", props.className)}
-      {...props}
+      className={twMerge("rounded-full size-16", props.className)}
     />
   );
 }

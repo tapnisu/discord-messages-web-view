@@ -6,6 +6,7 @@ import Koa from "koa";
 const router = new Router();
 
 interface Message {
+  id: string;
   content: string;
   author: Author;
 }
@@ -37,6 +38,7 @@ async function getLatestMessages(
       const author = await message.author.fetch();
 
       return {
+        id: message.id,
         content: message.content,
         author: {
           username: message.author.username ?? message.author.username,

@@ -23,7 +23,7 @@ export default function App() {
 
       <div className="w-full max-w-[768px]">
         {messages.map((message) => (
-          <div className="flex">
+          <div className="flex" key={message.id}>
             <Avatar author={message.author} className="p-2" />
 
             <div className="p-2">

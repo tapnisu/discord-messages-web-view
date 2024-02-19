@@ -3,11 +3,13 @@ import Avatar from "./components/Avatar";
 import "./index.css";
 import { Message } from "./lib/types";
 
+const BASE_PATH = import.meta.env.API_URL ?? "http://localhost:8000";
+
 export default function App() {
   const [messages, setMessages] = useState<Message[]>([]);
 
   function fetchMessages() {
-    fetch("http://localhost:8000/getLatestMessages", { cache: "no-store" })
+    fetch(new URL("/getLatestMessages", BASE_PATH).href, { cache: "no-store" })
       .then((result) => result.json())
       .then((result) => setMessages(result.messages));
   }

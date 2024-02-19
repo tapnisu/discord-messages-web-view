@@ -11,23 +11,53 @@ API to get your latest messages from your Discord channel
 
 2. Clone this project via `git clone https://github.com/arbyzy/discord-messages-api`
 
-3. Create `.env` file
+### API
+
+1. Move into `api` directory:
+
+   ```bash
+   cd api
+   ```
+
+2. Setup your env
 
    ```env
    DISCORD_TOKEN="Token of your discord account"
    DISCORD_CHANNEL_ID="Your channel ID"
    ```
 
-4. Install dependencies:
+3. Install dependencies:
 
    `npm i` / `yarn` / `pnpm i`
 
-5. Build:
+4. Build:
 
    `npm build` / `yarn build` / `pnpm build`
 
-6. Start the API:
+5. Start the API:
 
    `npm start` / `yarn start` / `pnpm start`
 
 ### 🎉 Now you got your API running 🎉
+
+### Frontend
+
+1. Move into `frontend` directory
+
+2. Setup your env
+
+   ```env
+   API_URL="" # If empty, it will use http://localhost:8000
+   ```
+
+3. Install dependencies:
+
+   `npm i` / `yarn` / `pnpm i`
+
+4. Build:
+
+   `npm build` / `yarn build` / `pnpm build`
+
+5. Start the API:
+
+   `npm preview` / `yarn preview` / `pnpm preview`
